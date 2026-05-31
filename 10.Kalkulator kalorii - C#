@@ -1,0 +1,90 @@
+using System;
+class FoodItem
+{
+    public string Nazwa;
+    public int Kalorie;
+
+    public FoodItem(string nazwa, int kalorie)
+    {
+        Nazwa = nazwa;
+        Kalorie = kalorie;
+    }
+}
+
+class Meal
+{
+    public string NazwaPosilku;
+    public FoodItem[] Produkty;
+
+    public Meal(string nazwaPosilku, int liczbaProduktow)
+    {
+        NazwaPosilku = nazwaPosilku;
+        Produkty = new FoodItem[liczbaProduktow];
+    }
+}
+
+class DailyIntake
+{
+    public Meal[] Posilki;
+
+    public DailyIntake(int liczbaPosilkow)
+    {
+        Posilki = new Meal[liczbaPosilkow];
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Ile posiłków chcesz dodać? ");
+        int liczbaPosilkow = int.Parse(Console.ReadLine());
+
+        DailyIntake dzien = new DailyIntake(liczbaPosilkow);
+        
+        for (int i = 0; i < liczbaPosilkow; i++)
+        {
+            Console.Write("\nPodaj nazwę posiłku: ");
+            string nazwaPosilku = Console.ReadLine();
+
+            Console.Write("Ile produktów? ");
+            int liczbaProduktow = int.Parse(Console.ReadLine());
+
+            dzien.Posilki[i] = new Meal(nazwaPosilku, liczbaProduktow);
+
+            for (int j = 0; j < liczbaProduktow; j++)
+            {
+                Console.Write("Nazwa produktu: ");
+                string nazwa = Console.ReadLine();
+
+                Console.Write("Kalorie: ");
+                int kalorie = int.Parse(Console.ReadLine());
+
+                dzien.Posilki[i].Produkty[j] = new FoodItem(nazwa, kalorie);
+            }
+        }
+        Console.WriteLine("\n--- PODSUMOWANIE ---");
+        int sumaWszystkichKalorii = 0;
+
+        for (int i = 0; i < liczbaPosilkow; i++)
+        {
+            Console.WriteLine("\nPosiłek: " + dzien.Posilki[i].NazwaPosilku);
+            int sumaPosilku = 0;
+
+            for (int j = 0; j < dzien.Posilki[i].Produkty.Length; j++)
+            {
+                Console.WriteLine(
+                    dzien.Posilki[i].Produkty[j].Nazwa +
+                    " - " +
+                    dzien.Posilki[i].Produkty[j].Kalorie +
+                    " kcal");
+
+                sumaPosilku += dzien.Posilki[i].Produkty[j].Kalorie;
+            }
+            Console.WriteLine("Kalorie posiłku: " + sumaPosilku);
+            sumaWszystkichKalorii += sumaPosilku;
+        }
+        Console.WriteLine("\nŁączna liczba kalorii: " + sumaWszystkichKalorii);
+    }
+}
+
