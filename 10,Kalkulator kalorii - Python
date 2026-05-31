@@ -1,0 +1,50 @@
+class FoodItem:
+    def __init__(self, nazwa, kalorie):
+        self.nazwa = nazwa
+        self.kalorie = kalorie
+
+class Meal:
+    def __init__(self, nazwa):
+        self.nazwa = nazwa
+        self.produkty = []
+
+class DailyIntake:
+    def __init__(self):
+        self.posilki = []
+
+dzien = DailyIntake()
+
+ile_posilkow = int(input("Ile posiłków chcesz dodać? "))
+
+for i in range(ile_posilkow):
+    nazwa_posilku = input("Podaj nazwę posiłku: ")
+    posilek = Meal(nazwa_posilku)
+
+    ile_produktow = int(input("Ile produktów ma ten posiłek? "))
+
+    for j in range(ile_produktow):
+        nazwa = input("Nazwa produktu: ")
+        kalorie = int(input("Liczba kalorii: "))
+
+        produkt = FoodItem(nazwa, kalorie)
+        posilek.produkty.append(produkt)
+
+    dzien.posilki.append(posilek)
+
+suma_dnia = 0
+
+print("\n--- PODSUMOWANIE ---")
+
+for posilek in dzien.posilki:
+    print("\n", posilek.nazwa)
+
+    suma_posilku = 0
+
+    for produkt in posilek.produkty:
+        print(produkt.nazwa, "-", produkt.kalorie, "kcal")
+        suma_posilku += produkt.kalorie
+
+    print("Kalorie posiłku:", suma_posilku)
+    suma_dnia += suma_posilku
+
+print("\nŁączna liczba kalorii:", suma_dnia)
